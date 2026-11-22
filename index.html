@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conrad Hansen — Operations Leader</title>
+
+<!-- Sets the theme before the page paints so there's no white flash on load -->
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+
+<style>
+  :root {
+    --bg:        #ffffff;
+    --bg-alt:    #f5f7fa;
+    --text:      #15181e;
+    --muted:     #5b6472;
+    --border:    #e2e6ec;
+    --accent:    #c2410c;
+    --accent-soft:#fff1e8;
+    --card:      #ffffff;
+    --shadow:    0 1px 3px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  }
+  [data-theme="dark"] {
+    --bg:        #0d1117;
+    --bg-alt:    #161b22;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --border:    #272d36;
+    --accent:    #f59e0b;
+    --accent-soft:#2a1f0e;
+    --card:      #161b22;
+    --shadow:    0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 980px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { font-weight: 700; letter-spacing: -.02em; font-size: 1.05rem; text-decoration: none; color: var(--text); }
+  .brand span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-link { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; transition: color .2s; }
+  .nav-link:hover { color: var(--accent); }
+
+  /* ---------- theme toggle (the X-Factor) ---------- */
+  .toggle {
+    position: relative; width: 56px; height: 30px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg-alt);
+    cursor: pointer; padding: 0; transition: background .3s ease, border-color .3s ease;
+    flex-shrink: 0;
+  }
+  .toggle:hover { border-color: var(--accent); }
+  .toggle-knob {
+    position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; line-height: 1;
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+  }
+  [data-theme="dark"] .toggle-knob { transform: translateX(26px); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 72px 0 56px; }
+  .eyebrow {
+    display: inline-block; font-size: .78rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-soft); padding: 5px 12px; border-radius: 999px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: clamp(2.3rem, 6vw, 3.6rem); font-weight: 800;
+    letter-spacing: -.035em; line-height: 1.08; margin-bottom: 16px;
+  }
+  .role { font-size: clamp(1.05rem, 2.4vw, 1.3rem); color: var(--muted); font-weight: 500; margin-bottom: 20px; }
+  .lede { font-size: 1.08rem; color: var(--muted); max-width: 620px; margin-bottom: 32px; }
+
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 10px; font-size: .95rem; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: 1px solid transparent;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 35%, transparent); }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- video ---------- */
+  .video-shell {
+    margin: 48px 0 8px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--border); box-shadow: var(--shadow);
+    background: var(--bg-alt); position: relative; aspect-ratio: 16 / 9;
+  }
+  .video-shell video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .video-fallback {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    color: var(--muted); font-size: .9rem; padding: 24px; gap: 8px;
+  }
+  .caption { font-size: .82rem; color: var(--muted); text-align: center; margin-bottom: 56px; }
+
+  /* ---------- stats ---------- */
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px; margin-bottom: 64px;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; text-align: center; transition: border-color .2s, transform .2s;
+  }
+  .stat:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .stat-num { font-size: 1.9rem; font-weight: 800; color: var(--accent); letter-spacing: -.03em; }
+  .stat-label { font-size: .82rem; color: var(--muted); margin-top: 4px; }
+
+  /* ---------- sections ---------- */
+  section { margin-bottom: 64px; }
+  h2 {
+    font-size: 1.55rem; font-weight: 700; letter-spacing: -.02em;
+    margin-bottom: 8px;
+  }
+  .section-sub { color: var(--muted); margin-bottom: 28px; font-size: .98rem; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 26px; transition: border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card-icon { font-size: 1.6rem; margin-bottom: 12px; display: block; }
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: .93rem; color: var(--muted); }
+
+  .cta-band {
+    background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px;
+    padding: 40px 32px; text-align: center;
+  }
+  .cta-band h2 { margin-bottom: 10px; }
+  .cta-band p { color: var(--muted); margin-bottom: 24px; max-width: 520px; margin-left: auto; margin-right: auto; }
+
+  /* ---------- footer / x-factor ---------- */
+  footer { border-top: 1px solid var(--border); padding: 40px 0 56px; }
+  .xfactor {
+    background: var(--accent-soft); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px; padding: 20px 24px; margin-bottom: 28px;
+  }
+  .xfactor h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); margin-bottom: 8px; }
+  .xfactor p { font-size: .92rem; color: var(--text); }
+  .copyright { font-size: .85rem; color: var(--muted); text-align: center; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 48px 0 40px; }
+    .nav-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Conrad&nbsp;<span>Hansen</span></a>
+    <div class="nav-right">
+      <a href="about.html" class="nav-link">Background</a>
+      <button class="toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span class="toggle-knob" id="toggleKnob">☀</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">Dallas–Fort Worth</span>
+    <h1>Operations at the&nbsp;speed of&nbsp;growth.</h1>
+    <p class="role">Regional Manager, West Region — RecNation Storage</p>
+    <p class="lede">
+      I run multi-site operations across Texas, California, and Arizona for one of the
+      country's largest vehicle storage platforms. I joined early, helped build the
+      processes we still run on, and I'm now finishing an MBA at SMU Cox with my sights
+      on operations leadership.
+    </p>
+    <div class="btn-row">
+      <a href="about.html" class="btn btn-primary">Read my background →</a>
+      <a href="#work" class="btn btn-ghost">What I do</a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       AI-GENERATED VIDEO — autoplay + loop + muted + playsinline
+       Drop your 5-second file in this folder named: hero.mp4
+       ============================================================ -->
+  <div class="video-shell">
+    <video autoplay loop muted playsinline poster="">
+      <source src="hero.mp4" type="video/mp4">
+    </video>
+    <div class="video-fallback">
+      <strong>hero.mp4</strong>
+      <span>Add your 5-second AI-generated video to this folder.</span>
+    </div>
+  </div>
+  <p class="caption">A short AI-generated clip illustrating the work: wide-open lots, big vehicles, tight operations.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Years at RecNation</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">States managed</div></div>
+    <div class="stat"><div class="stat-num">MBA</div><div class="stat-label">SMU Cox, 2027</div></div>
+    <div class="stat"><div class="stat-num">Multi</div><div class="stat-label">Department experience</div></div>
+  </div>
+
+  <section id="work">
+    <h2>What I actually do</h2>
+    <p class="section-sub">Three things take up most of my week.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon">🗺️</span>
+        <h3>Multi-site operations</h3>
+        <p>
+          Performance, staffing, and service across facilities in three states —
+          each with its own market, its own crew, and its own set of problems that
+          don't look like anyone else's.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚙️</span>
+        <h3>Process design</h3>
+        <p>
+          I joined when the playbook didn't exist yet. Building workflows that survive
+          growth and turnover has been the throughline of my career, and it's the part
+          I'm best at.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-icon">🔗</span>
+        <h3>Cross-functional work</h3>
+        <p>
+          I've worked across departments, which means I know how the pieces connect —
+          and where they stop connecting when something breaks.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta-band">
+      <h2>Want the longer version?</h2>
+      <p>Career history, what I'm studying, where I'm headed, and the systems I've built along the way.</p>
+      <a href="about.html" class="btn btn-primary">Go to my background page →</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <!-- X-FACTOR DESCRIPTION — under 50 words, required at bottom of landing page -->
+    <div class="xfactor">
+      <h4>Creative X-Factor — Adaptive Dark/Light Mode</h4>
+      <p>
+        The site detects your system theme on first visit, then remembers your choice
+        across pages and sessions. Every color runs through CSS custom properties, so the
+        full palette swaps instantly with one attribute change — no reload, no flash.
+      </p>
+    </div>
+    <p class="copyright">© 2026 Conrad Hansen · Built from scratch with HTML, CSS, and JavaScript.</p>
+  </div>
+</footer>
+
+<script>
+  var toggle = document.getElementById('themeToggle');
+  var knob   = document.getElementById('toggleKnob');
+
+  function paintKnob() {
+    knob.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☾' : '☀';
+  }
+  paintKnob();
+
+  toggle.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    paintKnob();
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+</script>
+
+<!-- ============================================================
+     CHATBOT — paste your Chatling embed script below this line
+     (Chatling → Deploy → Embed → copy the <script> tag)
+     ============================================================ -->
+
+
+</body>
+</html>

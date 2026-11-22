@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Background — Conrad Hansen</title>
+
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+
+<style>
+  :root {
+    --bg:        #ffffff;
+    --bg-alt:    #f5f7fa;
+    --text:      #15181e;
+    --muted:     #5b6472;
+    --border:    #e2e6ec;
+    --accent:    #c2410c;
+    --accent-soft:#fff1e8;
+    --card:      #ffffff;
+    --shadow:    0 1px 3px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  }
+  [data-theme="dark"] {
+    --bg:        #0d1117;
+    --bg-alt:    #161b22;
+    --text:      #e6edf3;
+    --muted:     #8b949e;
+    --border:    #272d36;
+    --accent:    #f59e0b;
+    --accent-soft:#2a1f0e;
+    --card:      #161b22;
+    --shadow:    0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 820px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { font-weight: 700; letter-spacing: -.02em; font-size: 1.05rem; text-decoration: none; color: var(--text); }
+  .brand span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-link { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; transition: color .2s; }
+  .nav-link:hover { color: var(--accent); }
+
+  .toggle {
+    position: relative; width: 56px; height: 30px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg-alt);
+    cursor: pointer; padding: 0; transition: background .3s ease, border-color .3s ease;
+    flex-shrink: 0;
+  }
+  .toggle:hover { border-color: var(--accent); }
+  .toggle-knob {
+    position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; line-height: 1;
+    transition: transform .32s cubic-bezier(.4,0,.2,1);
+  }
+  [data-theme="dark"] .toggle-knob { transform: translateX(26px); }
+
+  header.page-head { padding: 64px 0 40px; }
+  .eyebrow {
+    display: inline-block; font-size: .78rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+    background: var(--accent-soft); padding: 5px 12px; border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  h1 { font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.1; margin-bottom: 16px; }
+  .lede { font-size: 1.1rem; color: var(--muted); }
+
+  section { margin-bottom: 52px; }
+  h2 {
+    font-size: 1.4rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+  }
+  p { margin-bottom: 16px; }
+  p.last { margin-bottom: 0; }
+
+  /* timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--border);
+  }
+  .entry { position: relative; margin-bottom: 32px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry::before {
+    content: ''; position: absolute; left: -28px; top: 9px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); border: 3px solid var(--bg);
+  }
+  .entry-when { font-size: .8rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+  .entry-what { font-size: 1.08rem; font-weight: 700; margin: 2px 0 6px; }
+  .entry-where { font-size: .92rem; color: var(--muted); margin-bottom: 8px; }
+  .entry p { font-size: .95rem; color: var(--muted); margin-bottom: 0; }
+
+  /* skills */
+  .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+  .tag {
+    font-size: .85rem; font-weight: 500; padding: 7px 14px;
+    background: var(--bg-alt); border: 1px solid var(--border);
+    border-radius: 999px; color: var(--text); transition: all .2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .quote {
+    border-left: 3px solid var(--accent); background: var(--bg-alt);
+    padding: 20px 24px; border-radius: 0 10px 10px 0;
+    font-size: 1.02rem; color: var(--text); margin-bottom: 0;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 10px; font-size: .95rem; font-weight: 600;
+    text-decoration: none; border: 1px solid transparent;
+    transition: transform .15s ease, box-shadow .2s ease;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 35%, transparent); }
+
+  footer { border-top: 1px solid var(--border); padding: 36px 0 56px; }
+  .copyright { font-size: .85rem; color: var(--muted); text-align: center; }
+
+  @media (max-width: 600px) { .nav-link { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand">Conrad&nbsp;<span>Hansen</span></a>
+    <div class="nav-right">
+      <a href="index.html" class="nav-link">← Home</a>
+      <button class="toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span class="toggle-knob" id="toggleKnob">☀</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header class="page-head">
+    <span class="eyebrow">Background</span>
+    <h1>I build the systems a growing company runs on.</h1>
+    <p class="lede">
+      Five years, one company, three states, and a front-row seat to what happens
+      when a business scales faster than its processes.
+    </p>
+  </header>
+
+  <section>
+    <h2>The short version</h2>
+    <p>
+      I was one of the first people RecNation hired. That timing shaped everything about
+      how I work. When you join a company before the playbook exists, you don't inherit
+      processes — you write them, watch them break under load, and rewrite them. I've been
+      doing that since I came out of college, and it's made me far more comfortable with
+      ambiguity than most people five years into a career.
+    </p>
+    <p>
+      Today I'm Regional Manager for the West Region, which covers Texas, California, and
+      Arizona. The job is operations in the truest sense: occupancy and revenue performance,
+      site-level staffing and development, vendor and capital projects, and the constant work
+      of making sure a facility in Sacramento and a facility outside Houston are run to the
+      same standard despite having almost nothing else in common.
+    </p>
+    <p class="last">
+      Along the way I've worked across multiple departments, which turns out to be the most
+      useful thing on my résumé. I know how the pieces connect — and more importantly, I know
+      where they stop connecting when something goes wrong.
+    </p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="timeline">
+
+      <div class="entry">
+        <div class="entry-when">Current</div>
+        <div class="entry-what">Regional Manager, West Region</div>
+        <div class="entry-where">RecNation Storage · Texas, California, Arizona</div>
+        <p>
+          Own multi-site operational performance across three states. Build and roll out
+          the processes site teams run on, manage vendor and capital work, and translate
+          between what corporate needs and what actually happens on a lot at 7am.
+        </p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Earlier</div>
+        <div class="entry-what">Cross-functional roles</div>
+        <div class="entry-where">RecNation Storage</div>
+        <p>
+          Worked across several departments during the company's fastest growth years.
+          That breadth is why I can usually tell whether a problem is an operations problem,
+          a systems problem, or a communication problem — which are three very different fixes.
+        </p>
+      </div>
+
+      <div class="entry">
+        <div class="entry-when">Beginning</div>
+        <div class="entry-what">Early employee</div>
+        <div class="entry-where">RecNation Storage</div>
+        <p>
+          Joined near the start and helped grow the company from a small operation into a
+          national vehicle storage platform. Learned how to build a business by building one.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="timeline">
+      <div class="entry">
+        <div class="entry-when">Graduating 2027</div>
+        <div class="entry-what">Professional MBA</div>
+        <div class="entry-where">SMU Cox School of Business · Dallas, TX</div>
+        <p>
+          Deliberately weighted toward the capital side of the business — real estate
+          investment, corporate finance, and venture financing. Operations is the half
+          I already have; this is the half I'm building.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What I'm good at</h2>
+    <div class="tags">
+      <span class="tag">Multi-site operations</span>
+      <span class="tag">Process design</span>
+      <span class="tag">Team development</span>
+      <span class="tag">Vendor management</span>
+      <span class="tag">Capital projects</span>
+      <span class="tag">Operational analytics</span>
+      <span class="tag">Cross-functional coordination</span>
+      <span class="tag">Scaling startups</span>
+      <span class="tag">Real estate operations</span>
+      <span class="tag">Workflow automation</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where I'm headed</h2>
+    <p>
+      I want to run operations at the company level — eventually as a COO in real estate.
+      The path there is less about titles than about scope: full P&amp;L ownership, leading
+      leaders instead of operators, and getting fluent enough in capital that I can sit in
+      an operations review in the morning and a lender conversation in the afternoon without
+      changing my level of credibility.
+    </p>
+    <p class="quote">
+      Most operators stall because they only ever learn half the business. I'd rather
+      learn the other half on purpose than find out later I needed it.
+    </p>
+  </section>
+
+  <section>
+    <a href="index.html" class="btn btn-primary">← Back to the home page</a>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="copyright">© 2026 Conrad Hansen · Built from scratch with HTML, CSS, and JavaScript.</p>
+  </div>
+</footer>
+
+<script>
+  var toggle = document.getElementById('themeToggle');
+  var knob   = document.getElementById('toggleKnob');
+
+  function paintKnob() {
+    knob.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☾' : '☀';
+  }
+  paintKnob();
+
+  toggle.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    paintKnob();
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
+</script>
+
+<!-- ============================================================
+     CHATBOT — paste the SAME Chatling embed script here too.
+     The rubric requires it on BOTH pages.
+     ============================================================ -->
+
+
+</body>
+</html>
